@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>SOUNDTAG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background-image: url('ф.png');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.2);
+            backdrop-filter: brightness(0.95);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sound-button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            padding: 0;
+            transition: transform 0.12s ease, filter 0.1s ease;
+            display: inline-block;
+            border-radius: 50%; 
+        }
+
+        .sound-button:active {
+            transform: scale(0.95);
+            filter: brightness(0.9);
+        }
+
+        .button-image {
+            max-width: 380px; 
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 50%; 
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.4);
+            pointer-events: none;
+        }
+
+        /* Стиль для всплывающего изображения */
+        #popup-image-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8); /* Затемнение фона */
+            display: none; /* Скрыто по умолчанию */
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            cursor: pointer;
+        }
+
+        #popup-image-container img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.2);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 600px) {
+            .button-image {
+                max-width: 85vw;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<div class="container">
+    <!-- При клике вызываем функцию показа изображения -->
+    <button class="sound-button" id="showImageBtn">
+        <img src="к.png" alt="Кнопка" class="button-image">
+    </button>
+</div>
+
+<!-- Контейнер для нового изображения -->
+<div id="popup-image-container">
+    <img src="и.png" alt="Всплывающее изображение">
+</div>
+
+<script>
+    (function() {
+        const triggerButton = document.getElementById('showImageBtn');
+        const popup = document.getElementById('popup-image-container');
+
+        // Функция появления
+        function showImage(event) {
+            if (event) event.preventDefault();
+            popup.style.display = 'flex';
+        }
+
+        // Функция скрытия (при клике на само изображение или фон)
+        function hideImage() {
+            popup.style.display = 'none';
+        }
+
+        triggerButton.addEventListener('click', showImage);
+        triggerButton.addEventListener('touchstart', showImage, { passive: false });
+        
+        // Закрываем картинку при клике на неё
+        popup.addEventListener('click', hideImage);
+    })();
+</script>
+
+</body>
+</html>
